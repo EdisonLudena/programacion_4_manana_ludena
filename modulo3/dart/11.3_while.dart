@@ -29,10 +29,7 @@ void main() {
     }
 
   }
-
   
-
- 
   double promedio = total / empleados;
 
 
