@@ -34,8 +34,17 @@ class MainActivity : ComponentActivity() {
                 //Paso02CardScreen()
                  //Paso03LazyColumnScreen()
                  //Paso04ScaffoldScreen()
-                Paso05NavBarScreen()
+                //Paso05NavBarScreen()
                 // Paso06DialogosScreen()
+
+
+
+                //EJERCICIOS PROGRAMACION
+                //Ejercicio1Screen()
+                //Ejercicio2Screen()
+                //Ejercicio3Screen()
+                //Ejercicio4Screen()
+                Ejercicio5Screen()
             }
         }
     }
