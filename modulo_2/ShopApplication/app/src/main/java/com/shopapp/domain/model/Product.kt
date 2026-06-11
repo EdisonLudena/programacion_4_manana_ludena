@@ -1,4 +1,5 @@
 package com.shopapp.domain.model
+
 data class Product(
     val id: Int,
     val name: String,

@@ -11,7 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.*
 import androidx.navigation.compose.*
 import com.shopapp.presentation.components.LoadingScreen
-import com.shopapp.presentation.ui.admin.AdminScaffold
+import com.shopapp.presentation.ui.admin.categories.AdminScaffold
 import com.shopapp.presentation.ui.admin.categories.CategoriesAdminScreen
 import com.shopapp.presentation.ui.admin.dashboard.DashboardScreen
 import com.shopapp.presentation.ui.admin.orders.OrderAdminDetailScreen
@@ -20,9 +20,9 @@ import com.shopapp.presentation.ui.admin.products.ProductsAdminScreen
 import com.shopapp.presentation.ui.admin.users.UsersAdminScreen
 import com.shopapp.presentation.ui.auth.LoginScreen
 import com.shopapp.presentation.ui.auth.RegisterScreen
-import com.shopapp.presentation.ui.uipublic.client.orders.OrderDetailScreen
+import com.shopapp.presentation.ui.client.orders.OrderDetailScreen
 import com.shopapp.presentation.ui.client.orders.OrdersScreen
-import com.shopapp.presentation.ui.uipublic.client.profile.ProfileScreen
+import com.shopapp.presentation.ui.client.profile.ProfileScreen
 import com.shopapp.presentation.ui.uipublic.cart.CartBottomSheet
 import com.shopapp.presentation.ui.uipublic.catalog.CatalogScreen
 import com.shopapp.presentation.ui.uipublic.home.HomeScreen
@@ -198,8 +198,8 @@ fun NavGraph(
                     }
                 } else {
                     ProfileScreen(
-                        authViewModel = authViewModel,
                         onLogout = {
+                            authViewModel.logout()
                             navController.navigate(Screen.Login.route) {
                                 popUpTo(0) { inclusive = true }
                             }

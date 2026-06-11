@@ -1,6 +1,6 @@
-// presentation/ui/admin/categories/CategoryFormSheet.kt
 package com.shopapp.presentation.ui.admin.categories
 
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.shopapp.domain.model.Category
 import com.shopapp.domain.model.CategoryPayload
-import com.shopapp.presentation.components.ShopButton
 import com.shopapp.presentation.components.ShopTextField
 import com.shopapp.presentation.viewmodel.CategoryFormState
 import com.shopapp.theme.*
@@ -207,7 +206,7 @@ fun CategoryFormSheet(
                     modifier = Modifier.weight(1f).height(52.dp),
                     colors   = ButtonDefaults.outlinedButtonColors(contentColor = TextSecondary),
                     border   = ButtonDefaults.outlinedButtonBorder.copy(
-                        brush = androidx.compose.ui.graphics.SolidColor(Border),
+                        brush = SolidColor(Border),
                     ),
                     shape    = MaterialTheme.shapes.medium,
                 ) {

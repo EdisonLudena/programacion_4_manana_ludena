@@ -1,4 +1,3 @@
-// presentation/navigation/BottomNavBar.kt
 package com.shopapp.presentation.navigation
 
 import androidx.compose.material.icons.Icons

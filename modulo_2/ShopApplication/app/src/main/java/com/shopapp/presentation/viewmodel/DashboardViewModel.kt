@@ -1,4 +1,3 @@
-// presentation/viewmodel/DashboardViewModel.kt
 package com.shopapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel

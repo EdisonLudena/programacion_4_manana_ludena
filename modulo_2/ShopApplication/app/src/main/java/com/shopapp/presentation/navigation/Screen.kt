@@ -1,4 +1,3 @@
-// presentation/navigation/Screen.kt
 package com.shopapp.presentation.navigation
 
 sealed class Screen(val route: String) {
