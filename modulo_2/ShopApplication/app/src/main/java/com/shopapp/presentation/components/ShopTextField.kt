@@ -1,4 +1,3 @@
-// presentation/components/ShopTextField.kt
 package com.shopapp.presentation.components
 
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,3 @@
-// presentation/components/LoadingScreen.kt
 package com.shopapp.presentation.components
 
 import androidx.compose.foundation.background

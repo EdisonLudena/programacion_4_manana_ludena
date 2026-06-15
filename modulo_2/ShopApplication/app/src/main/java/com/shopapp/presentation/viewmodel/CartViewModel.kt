@@ -1,4 +1,3 @@
-// presentation/viewmodel/CartViewModel.kt — añadir checkout
 package com.shopapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel

@@ -1,5 +1,5 @@
-// presentation/ui/client/orders/OrdersScreen.kt
-package com.shopapp.presentation.ui.client.orders
+// presentation/ui/admin/orders/OrdersAdminScreen.kt
+package com.shopapp.presentation.ui.admin.orders
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,10 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shopapp.domain.model.Order
 import com.shopapp.domain.model.OrderStatus
-import com.shopapp.presentation.components.StatusBadge
 import com.shopapp.presentation.components.LoadingScreen
 import com.shopapp.presentation.components.ErrorScreen
-import com.shopapp.presentation.viewmodel.OrdersViewModel
+import com.shopapp.presentation.viewmodel.OrdersAdminViewModel
 import com.shopapp.theme.*
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -37,14 +36,14 @@ private val STATUS_FILTERS = listOf(
 )
 
 @Composable
-fun OrdersScreen(
-    onOrderClick: (Int) -> Unit,
-    viewModel:    OrdersViewModel = hiltViewModel(),
+fun OrdersAdminScreen(
+    onOrderDetail: (Int) -> Unit,
+    viewModel:     OrdersAdminViewModel = hiltViewModel(),
 ) {
     val state     by viewModel.state.collectAsState()
     val listState  = rememberLazyListState()
 
-    // Cargar más al llegar al final
+    // Paginación automática
     val shouldLoadMore by remember {
         derivedStateOf {
             val lastVisible = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
@@ -52,9 +51,7 @@ fun OrdersScreen(
             lastVisible >= total - 2 && !state.isLoadingMore && state.hasMore
         }
     }
-    LaunchedEffect(shouldLoadMore) {
-        if (shouldLoadMore) viewModel.loadMore()
-    }
+    LaunchedEffect(shouldLoadMore) { if (shouldLoadMore) viewModel.loadMore() }
 
     Column(
         modifier = Modifier
@@ -71,19 +68,19 @@ fun OrdersScreen(
                 ) {
                     Column {
                         Text(
-                            text       = "Mis pedidos",
+                            "Pedidos",
                             style      = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold,
                             color      = TextPrimary,
                         )
                         Text(
-                            text  = if (state.isLoading) "..." else "${state.total} pedidos",
+                            "${state.total} pedidos",
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary,
                         )
                     }
                     IconButton(onClick = viewModel::refresh) {
-                        Icon(Icons.Default.Refresh, contentDescription = "Actualizar", tint = TextSecondary)
+                        Icon(Icons.Default.Refresh, null, tint = TextSecondary)
                     }
                 }
 
@@ -119,17 +116,17 @@ fun OrdersScreen(
             state.orders.isEmpty() -> {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("📦", fontSize = 52.sp)
+                        Text("🛍️", fontSize = 52.sp)
                         Spacer(Modifier.height(12.dp))
                         Text(
-                            text       = if (state.statusFilter.isBlank()) "Sin pedidos"
-                            else "Sin pedidos con este estado",
+                            text       = "Sin pedidos",
                             style      = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color      = TextPrimary,
                         )
                         Text(
-                            text  = "Tus pedidos aparecerán aquí",
+                            text  = if (state.statusFilter.isBlank()) "Aún no hay pedidos"
+                            else "Sin pedidos con este estado",
                             style = MaterialTheme.typography.bodySmall,
                             color = TextSecondary,
                         )
@@ -142,10 +139,14 @@ fun OrdersScreen(
                     state          = listState,
                     modifier       = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     items(state.orders, key = { it.id }) { order ->
-                        OrderCard(order = order, onClick = { onOrderClick(order.id) })
+                        OrderAdminCard(
+                            order    = order,
+                            onStatus = { newStatus -> viewModel.changeStatus(order.id, newStatus) },
+                            onClick  = { onOrderDetail(order.id) },
+                        )
                     }
 
                     if (state.isLoadingMore) {
@@ -168,26 +169,27 @@ fun OrdersScreen(
     }
 }
 
-// ── OrderCard ─────────────────────────────────────────────────
+// ── OrderAdminCard ────────────────────────────────────────────
 
 @Composable
-fun OrderCard(order: Order, onClick: () -> Unit) {
+private fun OrderAdminCard(
+    order:    Order,
+    onStatus: (OrderStatus) -> Unit,
+    onClick:  () -> Unit,
+) {
+    val dateFmt   = SimpleDateFormat("dd MMM yyyy", Locale("es"))
     val inputFmt  = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
-    val outputFmt = SimpleDateFormat("dd MMM yyyy", Locale("es"))
-    val dateStr   = runCatching {
-        outputFmt.format(inputFmt.parse(order.createdAt)!!)
-    }.getOrDefault(order.createdAt.take(10))
+    val dateStr   = runCatching { dateFmt.format(inputFmt.parse(order.createdAt)!!) }
+        .getOrDefault(order.createdAt.take(10))
 
     Surface(
-        onClick        = onClick,
-        shape          = MaterialTheme.shapes.large,
-        color          = Surface,
-        tonalElevation = 0.dp,
-        modifier       = Modifier.fillMaxWidth(),
+        onClick = onClick,
+        shape   = MaterialTheme.shapes.large,
+        color   = Surface,
+        modifier = Modifier.fillMaxWidth(),
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-
-            // Header
+        Column(modifier = Modifier.padding(14.dp)) {
+            // Primera fila: ID + cliente + fecha
             Row(
                 modifier              = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -196,31 +198,34 @@ fun OrderCard(order: Order, onClick: () -> Unit) {
                 Column {
                     Text(
                         text       = "Pedido #${order.id}",
-                        style      = MaterialTheme.typography.titleMedium,
+                        style      = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         color      = TextPrimary,
                     )
                     Text(
-                        text  = dateStr,
+                        text  = "${order.username} · $dateStr",
                         style = MaterialTheme.typography.bodySmall,
                         color = TextSecondary,
                     )
                 }
-                StatusBadge(status = order.status)
+                // Selector de estado inline
+                StatusDropdown(
+                    current  = order.status,
+                    onChange = onStatus,
+                )
             }
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(10.dp))
 
-            // Preview ítems como chips
+            // Preview de ítems
             Row(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 modifier              = Modifier.fillMaxWidth(),
             ) {
-                val preview = order.items.take(3)
-                preview.forEach { item ->
+                order.items.take(2).forEach { item ->
                     Surface(
-                        color  = Surface2,
-                        shape  = MaterialTheme.shapes.extraSmall,
+                        color    = Surface2,
+                        shape    = MaterialTheme.shapes.extraSmall,
                     ) {
                         Text(
                             text     = "${item.quantity}× ${item.productName}",
@@ -231,9 +236,9 @@ fun OrderCard(order: Order, onClick: () -> Unit) {
                         )
                     }
                 }
-                if (order.items.size > 3) {
+                if (order.items.size > 2) {
                     Text(
-                        text  = "+${order.items.size - 3} más",
+                        text  = "+${order.items.size - 2} más",
                         style = MaterialTheme.typography.bodySmall,
                         color = TextFaint,
                         modifier = Modifier.align(Alignment.CenterVertically),
@@ -241,11 +246,11 @@ fun OrderCard(order: Order, onClick: () -> Unit) {
                 }
             }
 
-            Spacer(Modifier.height(12.dp))
-            HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
             Spacer(Modifier.height(10.dp))
+            HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
+            Spacer(Modifier.height(8.dp))
 
-            // Footer
+            // Footer: ítems + total + ver detalle
             Row(
                 modifier              = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -256,12 +261,20 @@ fun OrderCard(order: Order, onClick: () -> Unit) {
                     style = MaterialTheme.typography.bodySmall,
                     color = TextSecondary,
                 )
-                Text(
-                    text       = "$${"%.2f".format(order.total)}",
-                    style      = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.ExtraBold,
-                    color      = Accent,
-                )
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        text       = "$${"%.2f".format(order.total)}",
+                        style      = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.ExtraBold,
+                        color      = Accent,
+                    )
+                    Icon(
+                        Icons.Default.ChevronRight,
+                        contentDescription = "Ver detalle",
+                        tint     = TextFaint,
+                        modifier = Modifier.size(18.dp),
+                    )
+                }
             }
         }
     }

@@ -1,4 +1,3 @@
-// presentation/components/ShopButton.kt
 package com.shopapp.presentation.components
 
 import androidx.compose.foundation.layout.*

@@ -1,4 +1,3 @@
-// presentation/ui/uipublic/catalog/CatalogScreen.kt
 package com.shopapp.presentation.ui.uipublic.catalog
 
 import androidx.compose.foundation.background
