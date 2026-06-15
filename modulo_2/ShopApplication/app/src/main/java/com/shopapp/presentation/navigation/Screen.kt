@@ -4,6 +4,8 @@ sealed class Screen(val route: String) {
     // Auth
     data object Login    : Screen("login")
     data object Register : Screen("register")
+    data object ForgotPassword       : Screen("forgot-password")
+    data object ResetPasswordConfirm : Screen("reset-password-confirm")
 
     // Public
     data object Home     : Screen("home")
@@ -18,6 +20,7 @@ sealed class Screen(val route: String) {
     data class  OrderDetail(val id: Int = 0) : Screen("orders/{id}") {
         fun createRoute(id: Int) = "orders/$id"
     }
+    data object SendNotification : Screen("send-notification")
     data object Profile : Screen("profile")
 
     // Admin
@@ -26,4 +29,5 @@ sealed class Screen(val route: String) {
     data object AdminProducts   : Screen("admin/products")
     data object AdminOrders     : Screen("admin/orders")
     data object AdminUsers      : Screen("admin/users")
+
 }

@@ -15,12 +15,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shopapp.presentation.viewmodel.ProfileViewModel
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     onEditProfile: () -> Unit       = {},
     onLogout:      () -> Unit       = {},
+    onSendNotification: () -> Unit = {},    // ← nuevo parámetro
     viewModel:     ProfileViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -68,6 +73,38 @@ fun ProfileScreen(
                         .verticalScroll(rememberScrollState())
                         .padding(horizontal = 16.dp),
                 ) {
+                    val isUserStaff = profile?.isStaff ?: false
+
+
+                    if (profile?.isStaff == true) {
+                        HorizontalDivider()
+
+                        ListItem(
+                            headlineContent   = {
+                                Text("Enviar notificación", fontWeight = FontWeight.Medium)
+                            },
+                            supportingContent = {
+                                Text("Envía un correo a uno o todos los usuarios")
+                            },
+                            leadingContent    = {
+                                Icon(
+                                    imageVector        = Icons.Default.Send,
+                                    contentDescription = null,
+                                    tint               = MaterialTheme.colorScheme.primary,
+                                )
+                            },
+                            trailingContent   = {
+                                Icon(
+                                    imageVector        = Icons.AutoMirrored.Filled.ArrowForward,
+                                    contentDescription = null,
+                                )
+                            },
+                            modifier = Modifier.clickable(onClick = onSendNotification),
+                        )
+
+                        HorizontalDivider()
+                    }
+
                     Spacer(Modifier.height(24.dp))
 
                     // ── Avatar ───────────────────────────────────────────────
