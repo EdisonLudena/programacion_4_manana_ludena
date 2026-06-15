@@ -111,14 +111,14 @@ fun NavGraph(
             // ── LOGIN ───────────────────────────────
             composable(Screen.Login.route) {
                 LoginScreen(
-                    onLoginSuccess = { staff ->
+                    onLoginSuccess       = { staff ->
                         val dest = if (staff) Screen.AdminDashboard.route else Screen.Home.route
                         navController.navigate(dest) {
                             popUpTo(Screen.Login.route) { inclusive = true }
                         }
                     },
                     onNavigateToRegister = { navController.navigate(Screen.Register.route) },
-                    onForgotPassword     = { navController.navigate(Screen.ForgotPassword.route) },
+                    onForgotPassword     = { navController.navigate(Screen.ForgotPassword.route) },  // ← nuevo
                     viewModel            = authViewModel,
                 )
             }
@@ -137,6 +137,8 @@ fun NavGraph(
                 )
             }
 
+
+            // ── Recuperación de contraseña ───────────────────────────────────────────────
 
             composable(Screen.ForgotPassword.route) {
                 ForgotPasswordScreen(
