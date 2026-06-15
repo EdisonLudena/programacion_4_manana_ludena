@@ -3,6 +3,7 @@ package com.shopapp.presentation.navigation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.remote.creation.profile.Profile
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -214,6 +215,8 @@ fun NavGraph(
             }
 
             // ── PROFILE ────────────────────────────
+
+
             composable(Screen.Profile.route) {
                 if (!isAuthenticated) {
                     LaunchedEffect(Unit) {
@@ -443,16 +446,12 @@ fun NavGraph(
 
             // ── Notificaciones de staff ───────────────────────────────────────────────────
             composable(Screen.SendNotification.route) {
-                // CAMBIO: Eliminamos temporalmente la restricción de seguridad aquí.
-                // Como ya validamos que puedes entrar desde el ProfileScreen,
-                // no necesitas filtrar aquí otra vez.
-                /* if (!isStaff) {
+                if (!isStaff) {
                     LaunchedEffect(Unit) {
                         navController.popBackStack()
                     }
                     return@composable
                 }
-                */
                 SendNotificationScreen(
                     onBack = { navController.popBackStack() },
                 )

@@ -20,8 +20,8 @@ sealed class Screen(val route: String) {
     data class  OrderDetail(val id: Int = 0) : Screen("orders/{id}") {
         fun createRoute(id: Int) = "orders/$id"
     }
-    data object SendNotification : Screen("send-notification")
     data object Profile : Screen("profile")
+    data object SendNotification : Screen("send-notification")
 
     // Admin
     data object AdminDashboard  : Screen("admin")
