@@ -23,10 +23,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    onEditProfile: () -> Unit       = {},
-    onLogout:      () -> Unit       = {},
+    onEditProfile:      () -> Unit = {},
+    onLogout:           () -> Unit = {},
     onSendNotification: () -> Unit = {},    // ← nuevo parámetro
-    viewModel:     ProfileViewModel = hiltViewModel(),
+    viewModel:          ProfileViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -63,7 +63,6 @@ fun ProfileScreen(
             }
 
             else -> {
-                val profile = state.profile
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,8 +72,7 @@ fun ProfileScreen(
                         .verticalScroll(rememberScrollState())
                         .padding(horizontal = 16.dp),
                 ) {
-                    val isUserStaff = profile?.isStaff ?: false
-
+                    val profile = state.profile
 
                     if (profile?.isStaff == true) {
                         HorizontalDivider()

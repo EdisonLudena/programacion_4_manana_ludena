@@ -3,6 +3,7 @@ package com.shopapp.presentation.navigation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.remote.creation.profile.Profile
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -111,14 +112,14 @@ fun NavGraph(
             // ── LOGIN ───────────────────────────────
             composable(Screen.Login.route) {
                 LoginScreen(
-                    onLoginSuccess = { staff ->
+                    onLoginSuccess       = { staff ->
                         val dest = if (staff) Screen.AdminDashboard.route else Screen.Home.route
                         navController.navigate(dest) {
                             popUpTo(Screen.Login.route) { inclusive = true }
                         }
                     },
                     onNavigateToRegister = { navController.navigate(Screen.Register.route) },
-                    onForgotPassword     = { navController.navigate(Screen.ForgotPassword.route) },
+                    onForgotPassword     = { navController.navigate(Screen.ForgotPassword.route) },  // ← nuevo
                     viewModel            = authViewModel,
                 )
             }
@@ -137,6 +138,8 @@ fun NavGraph(
                 )
             }
 
+
+            // ── Recuperación de contraseña ───────────────────────────────────────────────
 
             composable(Screen.ForgotPassword.route) {
                 ForgotPasswordScreen(
@@ -212,6 +215,8 @@ fun NavGraph(
             }
 
             // ── PROFILE ────────────────────────────
+
+
             composable(Screen.Profile.route) {
                 if (!isAuthenticated) {
                     LaunchedEffect(Unit) {
@@ -441,16 +446,12 @@ fun NavGraph(
 
             // ── Notificaciones de staff ───────────────────────────────────────────────────
             composable(Screen.SendNotification.route) {
-                // CAMBIO: Eliminamos temporalmente la restricción de seguridad aquí.
-                // Como ya validamos que puedes entrar desde el ProfileScreen,
-                // no necesitas filtrar aquí otra vez.
-                /* if (!isStaff) {
+                if (!isStaff) {
                     LaunchedEffect(Unit) {
                         navController.popBackStack()
                     }
                     return@composable
                 }
-                */
                 SendNotificationScreen(
                     onBack = { navController.popBackStack() },
                 )
