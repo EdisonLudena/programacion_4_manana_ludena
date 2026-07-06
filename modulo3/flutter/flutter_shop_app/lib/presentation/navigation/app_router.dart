@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_shop_app/presentation/screens/cart/cart_screen.dart';
+import 'package:flutter_shop_app/presentation/screens/catalog/productdetailscreen.dart';
 import 'package:go_router/go_router.dart';
 import '../../domain/model/auth_state.dart';
 import '../providers/auth_provider.dart';
@@ -66,11 +68,24 @@ final routerProvider = Provider<GoRouter>((ref) {
       ShellRoute(
         builder: (_, __, child) => PublicShell(child: child),
         routes: [
-          GoRoute(path: '/',        builder: (_, __) => const HomeScreen()),
-          GoRoute(path: '/catalog', builder: (_, __) => const CatalogScreen()),
+          GoRoute(path: '/', builder: (_, __) => const HomeScreen()),
           GoRoute(
-            path:    '/product/:id',
-            builder: (_, s) => _PlaceholderScreen('Detalle #${s.pathParameters['id']} — M5'),
+        path: '/catalog',
+        builder: (_, __) => const CatalogScreen(),
+        routes: [
+          GoRoute(
+            path: ':id', // /catalog/1 → id=1
+            builder: (_, state) {
+              final id = int.parse(state.pathParameters['id']!);
+              return ProductDetailScreen(productId: id);
+            },
+          ),
+        ],
+      ),
+
+          GoRoute(
+            path: '/cart',
+            builder: (_, __) => const CartScreen(),
           ),
           GoRoute(path: '/cart',    builder: (_, __) => const _PlaceholderScreen('Carrito — M5')),
           GoRoute(path: '/orders',  builder: (_, __) => const _PlaceholderScreen('Mis pedidos — M6')),
