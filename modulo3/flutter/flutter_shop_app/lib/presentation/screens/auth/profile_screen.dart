@@ -168,7 +168,7 @@ class _LogoutButton extends StatelessWidget {
     child:  OutlinedButton.icon(
       onPressed: () => showDialog(
         context: context,
-        builder: (_) => AlertDialog(
+        builder: (dialogContext) => AlertDialog(
           backgroundColor: AppColors.surface,
           shape:           RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title:           const Text('¿Cerrar sesión?',
@@ -179,14 +179,22 @@ class _LogoutButton extends StatelessWidget {
           ),
           actions: [
             TextButton(
- 
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(dialogContext),
               child:     const Text('Cancelar'),
             ),
             TextButton(
-              onPressed: () async {
-                Navigator.pop(context);
-                await onConfirm();
+              onPressed: () {
+                // 1. Cierra el diálogo de alerta inmediatamente usando su propio contexto
+                Navigator.pop(dialogContext);
+                
+                // 2. Ejecuta el logout de manera segura después del ciclo de renderizado actual
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await onConfirm();
+                  
+                  if (context.mounted) {
+                    context.go('/login');
+                  }
+                });
               },
               child: const Text(
                 'Cerrar sesión',
