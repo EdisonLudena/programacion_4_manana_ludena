@@ -19,8 +19,6 @@ class ProfileScreen extends ConsumerWidget {
     final uploadState  = ref.watch(imageUploadProvider);
     final tt           = Theme.of(context).textTheme;
 
-
-    
     ref.listen<ImageUploadState>(imageUploadProvider, (_, next) {
       if (next is ImageUploadSuccess) {
         ScaffoldMessenger.of(context).showSnackBar(
