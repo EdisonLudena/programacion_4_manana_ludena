@@ -1,34 +1,33 @@
 void main() {
-  int cansancio = 38;
+  int minutosTranscurridos = 38;
 
-  if (cansancio > 37.5) {
-    print('Fatiga extrema');
-  } else if (cansancio > 36) {
-    print('Físico normal');
+  if (minutosTranscurridos > 90) {
+    print('Tiempo de descuento');
+  } else if (minutosTranscurridos > 45) {
+    print('Segundo tiempo');
   } else {
-    print('Muy descansado');
+    print('Primer tiempo');
   }
 
-  String estadoFisico = cansancio > 37.5 ? 'Agotado' : 'Activo';
-  print(estadoFisico);
+  String estadoPartido = minutosTranscurridos > 90 ? 'Partido finalizado' : 'Partido en juego';
+  print(estadoPartido);
 
-  String? club;
-  String verClub = club != null ? club.toUpperCase() : 'Sin club';
+  String? directorTecnico;
+  String displayTecnico = directorTecnico != null ? directorTecnico.toUpperCase() : 'Sin estratega';
 
-  String verClub2 = club?.toUpperCase() ?? 'Sin club';
-  print(verClub2);
+  String displayTecnico2 = directorTecnico?.toUpperCase() ?? 'Sin estratega';
+  print(displayTecnico2);
 
-  void main() {
-    String? nombreJugador;
+  void subProceso() {
+    String? proximoRival;
 
-
-    if (nombreJugador != null) {
-      print(nombreJugador.length);
+    if (proximoRival != null) {
+      print(proximoRival.length);
     }
 
-    print(nombreJugador?.length);
+    print(proximoRival?.length);
 
-    int longitudNombre = nombreJugador?.length ?? 0;
-    print(longitudNombre);
+    int longitudRival = proximoRival?.length ?? 0;
+    print(longitudRival);
   }
 }

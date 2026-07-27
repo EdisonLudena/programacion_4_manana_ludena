@@ -1,51 +1,59 @@
 class Jugador {
+  // 1. Propiedades
   final String id;
-  final String nombre;
+  final String apellido;
   String       posicion;
-  bool         _convocado = false;
+  bool         _titular = false;  // _ indica uso interno
 
+  // 2. Constructor nombrado con parámetros nombrados
   Jugador({
     required this.id,
-    required this.nombre,
+    required this.apellido,
     required this.posicion,
   });
 
-  bool   get convocado => _convocado;
-  String get estado    => _convocado ? 'activo' : 'inactivo';
+  // 3. Getter — propiedad derivada, solo lectura
+  bool   get titular => _titular;
+  String get estado  => _titular ? 'en cancha' : 'en la banca';
 
-  set estadoConvocado(bool valor) {
-    _convocado = valor;
-    print('$nombre: ${valor ? "convocado" : "desconvocado"}');
+  // 4. Setter — escritura controlada
+  set asignacionTitular(bool valor) {
+    _titular = valor;
+    print('$apellido: ${valor ? "va desde el arranque" : "va como variante"}');
   }
 
-  void convocar() {
-    _convocado = true;
-    print('$nombre convocado en posicion $posicion');
+  // 5. Métodos
+  void ingresarAlPartido() {
+    _titular = true;
+    print('$apellido ingresó a la cancha como $posicion');
   }
 
-  void desconvocar() {
-    _convocado = false;
-    print('$nombre desconvocado');
+  void salirDelPartido() {
+    _titular = false;
+    print('$apellido fue sustituido');
   }
 
-  String resumen() => 'ID: $id | Nombre: $nombre | Posicion: $posicion | Estado: $estado';
+  String resumen() => 'ID: $id | Jugador: $apellido | Posición: $posicion | Estado: $estado';
 
+  // 6. toString
   @override
-  String toString() => 'Jugador($nombre, $posicion, $estado)';
+  String toString() => 'Jugador($apellido, $posicion, $estado)';
 }
 
 void main() {
-  final delantero = Jugador(
+  // Crear una instancia
+  final mediocampista = Jugador(
     id:     'JUG-010',
-    nombre: 'Lionel Messi',
-    posicion:     'Delantero',
+    apellido: 'Arce',
+    posicion: 'Enganche',
   );
 
-  delantero.convocar();
-  print(delantero.estado);
-  print(delantero.resumen());
-  print(delantero);
+  // Usar sus métodos y propiedades
+  mediocampista.ingresarAlPartido();
+  print(mediocampista.estado);       // en cancha
+  print(mediocampista.resumen());
+  print(mediocampista);              // llama toString() automáticamente
 
-  delantero.estadoConvocado = false;
-  print(delantero.convocado);
+  mediocampista.asignacionTitular = false;  // usa el setter
+  print(mediocampista.titular);   // false
 }

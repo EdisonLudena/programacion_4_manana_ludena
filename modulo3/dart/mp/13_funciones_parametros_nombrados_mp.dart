@@ -1,23 +1,23 @@
-void registrarJugador({
-  required String nombre,
-  required int    dorsal,
-  bool   titular    = true,
-  int    contratoAnios = 3,
+void configurarPartido({
+  required String rival,
+  required int numeroSuplentes,
+  bool esLocal = true,
+  int duracionMinutos = 90,
 }) {
-  final estado = titular ? 'Titular' : 'Suplente';
-  print('Registrando a $nombre ($estado) con dorsal $dorsal (contrato: ${contratoAnios} años)');
+  final condicion = esLocal ? 'Casa' : 'Visita';
+  print('Partido contra $rival en condición de $condicion (Suplentes: $numeroSuplentes, Tiempo: ${duracionMinutos}min)');
 }
 
 void main() {
-  registrarJugador(
-    nombre:       'Lionel Messi',
-    dorsal:     10,
-    titular:        false,
-    contratoAnios: 2,
+  configurarPartido(
+    rival: 'Barcelona SC',
+    numeroSuplentes: 5,
+    esLocal: false,
+    duracionMinutos: 95,
   );
 
-  registrarJugador(
-    nombre:   'Cristiano Ronaldo',
-    dorsal: 7,
+  configurarPartido(
+    rival: 'Independiente del Valle',
+    numeroSuplentes: 7,
   );
 }

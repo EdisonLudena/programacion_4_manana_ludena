@@ -1,25 +1,25 @@
 void main() {
-  int    partidosJugados = 42;
-  double promedioPartidos = partidosJugados.toDouble();
-  String textoPartidos   = partidosJugados.toString();
+  int golesLocales = 3;
+  double minutosPromedio = golesLocales.toDouble();
+  String dorsalTexto = golesLocales.toString();
 
-  int    golesParseados = int.parse('123');
-  double valorMercadoParseado = double.parse('3.14');
+  int idPartido = int.parse('105');
+  double distanciaRecorrida = double.parse('11.45');
 
-  int?    tarjetasParseadas = int.tryParse('abc');
-  double? efectividadParseada = double.tryParse('99');
+  int? aforoEstimado = int.tryParse('diez_mil');
+  double? calificacionTecnica = double.tryParse('8.5');
 
-  Object datoJugador = 'texto';
-  if (datoJugador is String) {
-    print(datoJugador.length);
+  Object posicionJugador = 'Mediocampista';
+  if (posicionJugador is String) {
+    print(posicionJugador.length);
   }
 
-  Object objetoEquipo = 'Hola';
-  String nombreEquipoCast = objetoEquipo as String;
+  Object datosEquipo = 'Liga de Quito';
+  String nombreEquipo = datosEquipo as String;
 
-  String? posicionNullable = null;
-  int longitudPosicion = posicionNullable?.length ?? 0;
-  print(longitudPosicion);
+  String? informeArbitral = null;
+  int longitudInforme = informeArbitral?.length ?? 0;
+  print(longitudInforme);
 
   print(double.infinity);
   print(double.nan);

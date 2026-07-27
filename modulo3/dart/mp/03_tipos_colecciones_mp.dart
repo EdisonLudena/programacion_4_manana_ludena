@@ -1,38 +1,38 @@
 void main() {
-  List<String> jugadores = ['Messi', 'Ronaldo', 'Neymar'];
-  var          goles     = [1, 2, 3, 4, 5];
+  List<String> equipos = ['Barcelona SC', 'Emelec', 'Independiente del Valle'];
+  var dorsales = [1, 5, 8, 10, 11];
 
-  print(jugadores[0]);
-  print(jugadores.length);
-  jugadores.add('Mbappé');
-  jugadores.remove('Ronaldo');
+  print(equipos[0]);
+  print(equipos.length);
+  equipos.add('Liga de Quito');
+  equipos.remove('Emelec');
 
-  Map<String, int> dorsales = {
-    'Messi':   10,
-    'Ronaldo':  7,
-    'Neymar': 11,
+  Map<String, int> tablaGoleadores = {
+    'Anangonó': 12,
+    'Arce': 15,
+    'Jeison': 10,
   };
 
-  print(dorsales['Messi']);
-  print(dorsales['Mbappé']);
-  dorsales['Suárez'] = 9;
+  print(tablaGoleadores['Anangonó']);
+  print(tablaGoleadores['Martínez']);
+  tablaGoleadores['Estrada'] = 14;
 
-  Set<String> posiciones = {'delantero', 'mediocampista', 'defensa'};
-  posiciones.add('delantero');
-  print(posiciones.length);
+  Set<String> posicionesCancha = {'Arquero', 'Defensa', 'Mediocampista'};
+  posicionesCancha.add('Arquero');
+  print(posicionesCancha.length);
 
-  var equipoA = [1, 2, 3];
-  var equipoB = [4, 5, 6];
-  var plantillaCompleta = [...equipoA, ...equipoB];
+  var convocadosLocales = [1, 2, 3];
+  var convocadosExtranjeros = [4, 5, 6];
+  var plantillaCompleta = [...convocadosLocales, ...convocadosExtranjeros];
   print(plantillaCompleta);
 
-  bool incluirSuplente = true;
-  var convocados = [
-    'jugador1',
-    'jugador2',
-    if (incluirSuplente) 'jugador3',
+  bool incluyeSuplentes = true;
+  var listaConvocatoria = [
+    'Titular 1',
+    'Titular 2',
+    if (incluyeSuplentes) 'Suplente 1',
   ];
 
-  var dorsalesCalculados = [for (var i = 1; i <= 5; i++) i * i];
-  print(dorsalesCalculados);
+  var minutosEntrenamiento = [for (var i = 1; i <= 5; i++) i * 15];
+  print(minutosEntrenamiento);
 }

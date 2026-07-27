@@ -1,14 +1,14 @@
 void main() {
-  final posiciones = ['POR', 'DEF', 'MED', 'DEL', 'SUP'];
+  final equipos = ['Liga de Quito', 'Barcelona SC', 'Independiente del Valle', 'Emelec', 'El Nacional'];
 
-  for (final posicion in posiciones) {
-    print(posicion);
+  for (final equipo in equipos) {
+    print(equipo);
   }
 
-  posiciones.forEach((p) => print(p.toLowerCase()));
+  equipos.forEach((e) => print(e.toLowerCase()));
 
-  final golesPorPosicion = {'POR': 0, 'DEF': 5, 'MED': 12, 'DEL': 35};
-  for (final entrada in golesPorPosicion.entries) {
-    print('Posición: ${entrada.key} → goles anotados: ${entrada.value}');
+  final goleadores = {'Arce': 15, 'Anangonó': 12, 'Jeison': 10, 'Estrada': 8};
+  for (final entrada in goleadores.entries) {
+    print('${entrada.key} → ${entrada.value} goles');
   }
 }

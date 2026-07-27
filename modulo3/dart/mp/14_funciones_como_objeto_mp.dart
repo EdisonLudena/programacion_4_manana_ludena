@@ -1,17 +1,17 @@
-int duplicarGoles(int n)  => n * 2;
-int triplicarGoles(int n) => n * 3;
+int duplicarGoles(int g) => g * 2;
+int triplicarGoles(int g) => g * 3;
 
 void main() {
-  int Function(int) calcularMetrica;
+  int Function(int) calcularRendimiento;
 
-  calcularMetrica = duplicarGoles;
-  print(calcularMetrica(5));
+  calcularRendimiento = duplicarGoles;
+  print(calcularRendimiento(2));
 
-  calcularMetrica = triplicarGoles;
-  print(calcularMetrica(5));
+  calcularRendimiento = triplicarGoles;
+  print(calcularRendimiento(2));
 
-  final calculosRendimiento = <int Function(int)>[duplicarGoles, triplicarGoles];
-  for (final fn in calculosRendimiento) {
-    print(fn(10));
+  final proyeccionesGoles = <int Function(int)>[duplicarGoles, triplicarGoles];
+  for (final fn in proyeccionesGoles) {
+    print(fn(4));
   }
 }

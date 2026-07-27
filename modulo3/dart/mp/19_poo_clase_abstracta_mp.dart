@@ -1,35 +1,47 @@
-abstract class PersonalClub {
-  String get nombre;
-  double calcularSueldo();
-  double calcularBonificacion();
+// abstract class define el contrato — QUÉ puede hacer cualquier Rol en el equipo
+abstract class RolEquipo {
+  String get nombreJugador;
+  String get posicion;
+  double calcularRendimientoFisico(); // cada rol lo implementa a su manera
+  double calcularEfectividadTactica();
 
-  void describir() {
-    print('$nombre — sueldo: ${calcularSueldo().toStringAsFixed(2)}, '
-          'bonificación: ${calcularBonificacion().toStringAsFixed(2)}');
+  // Método concreto construido sobre la abstracción
+  void generarInforme() {
+    print('$nombreJugador ($posicion) — Rendimiento Físico: ${calcularRendimientoFisico().toStringAsFixed(1)}%, '
+          'Efectividad: ${calcularEfectividadTactica().toStringAsFixed(1)}%');
   }
 }
 
-class JugadorContratado extends PersonalClub {
-  final double rendimiento;
-  JugadorContratado(this.rendimiento);
+// Implementaciones concretas — el CÓMO es específico de cada clase
+class Delantero extends RolEquipo {
+  final String nombre;
+  final int remates, goles;
+  Delantero(this.nombre, this.remates, this.goles);
 
-  @override String get nombre => 'Jugador (rendimiento=$rendimiento)';
-  @override double calcularSueldo()      => 3.1416 * rendimiento * rendimiento;
-  @override double calcularBonificacion() => 2 * 3.1416 * rendimiento;
+  @override String get nombreJugador => nombre;
+  @override String get posicion => 'Delantero';
+  @override double calcularRendimientoFisico() => 85.0; // Desgaste promedio en sprint
+  @override double calcularEfectividadTactica() => remates > 0 ? (goles / remates) * 100 : 0.0;
 }
 
-class Entrenador extends PersonalClub {
-  final double experiencia, titulos;
-  Entrenador(this.experiencia, this.titulos);
+class Mediocampista extends RolEquipo {
+  final String nombre;
+  final int pasesTotales, pasesAcertados;
+  Mediocampista(this.nombre, this.pasesTotales, this.pasesAcertados);
 
-  @override String get nombre => 'Entrenador (${experiencia}x$titulos)';
-  @override double calcularSueldo()      => experiencia * titulos;
-  @override double calcularBonificacion() => 2 * (experiencia + titulos);
+  @override String get nombreJugador => nombre;
+  @override String get posicion => 'Mediocampista';
+  @override double calcularRendimientoFisico() => 95.5; // Mayor recorrido en la cancha
+  @override double calcularEfectividadTactica() => pasesTotales > 0 ? (pasesAcertados / pasesTotales) * 100 : 0.0;
 }
 
 void main() {
-  final miembros = <PersonalClub>[JugadorContratado(5), Entrenador(4, 7)];
-  for (final f in miembros) {
-    f.describir();
+  final alineacion = <RolEquipo>[
+    Delantero('Arce', 5, 2),
+    Mediocampista('Piovi', 45, 39)
+  ];
+
+  for (final jugador in alineacion) {
+    jugador.generarInforme(); // no importa qué rol específico tenga el jugador
   }
 }

@@ -1,29 +1,29 @@
 void main() {
-  final entrenador = 'Pep';
-  final experiencia = 15;
+  final equipo = 'Liga de Quito';
+  final goles = 3;
 
-  print('Entrenador: $entrenador');
+  print('Goles de $equipo');
 
-  print('${entrenador.toUpperCase()} tendrá ${experiencia + 1} años de carrera el próximo año');
+  print('${equipo.toUpperCase()} anotó ${goles + 1} goles en el global');
 
-  final fichaEntrenador = '''
-Entrenador: $entrenador
-Experiencia: $experiencia años
-Calificado:  ${experiencia >= 10 ? 'Sí' : 'No'}
+  final informePartido = '''
+Equipo:  $equipo
+Goles:   $goles
+Ganador: ${goles >= 1 ? 'Sí' : 'No'}
   ''';
-  print(fichaEntrenador);
+  print(informePartido);
 
-  final rutaPlantilla = r'C:\Equipos\Futbol\Plantilla';
-  print(rutaPlantilla);
+  final rutaEstrategia = r'C:\Alineaciones\LigaDeQuito\Tacticas';
+  print(rutaEstrategia);
 
-  final bienvenida = 'Bienvenido, ' + entrenador + '!';
+  final cantico = 'Vamos, ' + equipo + '!';
 
-  print('realmadrid'.toUpperCase());
-  print('  Real Madrid  '.trim());
-  print('Real Madrid'.contains('Mad'));
-  print('Real Madrid'.replaceAll('d', 'D'));
-  print('del,med,def'.split(','));
-  print('Real Madrid'.substring(0, 4));
-  print('Real Madrid'.startsWith('Rea'));
-  print('d10'.padLeft(5, '0'));
+  print('gol'.toUpperCase());
+  print('  Árbitro  '.trim());
+  print('Mediocampista'.contains('cam'));
+  print('Penal'.replaceAll('a', 'A'));
+  print('Arquero,Defensa,Delantero'.split(','));
+  print('Campeonato'.substring(0, 4));
+  print('Balón'.startsWith('Bal'));
+  print('10'.padLeft(5, '0'));
 }

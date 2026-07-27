@@ -37,6 +37,7 @@ class ProfileViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true, error = null) }
             repository.getProfile()
                 .onSuccess { profile ->
+                    // Usamos el perfil real tal cual viene del servidor
                     _state.update {
                         it.copy(
                             profile   = profile,

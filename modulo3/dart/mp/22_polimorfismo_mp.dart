@@ -1,44 +1,44 @@
-abstract class RolDeportivo {
+abstract class ElementoPartido {
   String get nombre;
-  double calcularPresupuestoAnual();
+  double calcularTiempoEfectivo();
 }
 
-class JugadorEstrella extends RolDeportivo {
-  final double salarioBase;
-  JugadorEstrella(this.salarioBase);
-  @override String get nombre => 'Estrella';
-  @override double calcularPresupuestoAnual() => salarioBase * salarioBase;
+class TiempoRegular extends ElementoPartido {
+  final double minutosReglamentarios;
+  TiempoRegular(this.minutosReglamentarios);
+  @override String get nombre => 'Tiempo Regular';
+  @override double calcularTiempoEfectivo() => minutosReglamentarios;
 }
 
-class CuerpoTecnico extends RolDeportivo {
-  final double salarioEntrenador, bonoDesempeno;
-  CuerpoTecnico(this.salarioEntrenador, this.bonoDesempeno);
-  @override String get nombre => 'Cuerpo Técnico';
-  @override double calcularPresupuestoAnual() => (salarioEntrenador * bonoDesempeno) / 2;
+class TiempoAdicional extends ElementoPartido {
+  final double minutosAnadidos;
+  TiempoAdicional(this.minutosAnadidos);
+  @override String get nombre => 'Tiempo de Adición';
+  @override double calcularTiempoEfectivo() => minutosAnadidos * 0.8;
 }
 
-class FichajePromesa extends RolDeportivo {
-  final double costoFichaje;
-  FichajePromesa(this.costoFichaje);
-  @override String get nombre => 'Promesa';
-  @override double calcularPresupuestoAnual() => 3.1416 * costoFichaje * costoFichaje;
+class TiempoExtra extends ElementoPartido {
+  final double minutosProrroga;
+  TiempoExtra(this.minutosProrroga);
+  @override String get nombre => 'Prórroga / Tiempo Extra';
+  @override double calcularTiempoEfectivo() => minutosProrroga * 0.9;
 }
 
-void imprimirPresupuesto(RolDeportivo rol) {
-  print('${rol.nombre}: ${rol.calcularPresupuestoAnual().toStringAsFixed(2)} USD');
+void imprimirDetalleTiempo(ElementoPartido elemento) {
+  print('${elemento.nombre}: ${elemento.calcularTiempoEfectivo().toStringAsFixed(1)} min de juego real');
 }
 
 void main() {
-  final roles = <RolDeportivo>[
-    JugadorEstrella(4),
-    CuerpoTecnico(6, 3),
-    FichajePromesa(5),
+  final partesDelJuego = <ElementoPartido>[
+    TiempoRegular(90.0),
+    TiempoAdicional(5.0),
+    TiempoExtra(30.0),
   ];
 
-  for (final r in roles) {
-    imprimirPresupuesto(r);
+  for (final parte in partesDelJuego) {
+    imprimirDetalleTiempo(parte);
   }
 
-  final mayor = roles.reduce((a, b) => a.calcularPresupuestoAnual() > b.calcularPresupuestoAnual() ? a : b);
-  print('\nRol con mayor presupuesto: ${mayor.nombre}');
+  final mayorDesgaste = partesDelJuego.reduce((a, b) => a.calcularTiempoEfectivo() > b.calcularTiempoEfectivo() ? a : b);
+  print('\nFase con mayor tiempo efectivo: ${mayorDesgaste.nombre}');
 }

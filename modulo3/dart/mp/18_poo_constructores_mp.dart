@@ -1,46 +1,54 @@
-class Equipo {
+class Estadio {
   final String nombre;
   final String ciudad;
-  final int    capacidadEstadio;
-  final bool   esProfesional;
+  final int    capacidad;
+  final bool   tieneLuminarias;
 
-  Equipo({
+  // Constructor principal
+  Estadio({
     required this.nombre,
     required this.ciudad,
-    required this.capacidadEstadio,
-    this.esProfesional = false,
+    required this.capacidad,
+    this.tieneLuminarias = true,
   });
 
-  Equipo.local()
-      : nombre = 'Club Local',
-        ciudad       = 'Mi Ciudad',
-        capacidadEstadio   = 8080,
-        esProfesional   = false;
+  // Constructor nombrado — alternativa de creación con configuración predefinida
+  Estadio.casaBlanca()
+      : nombre          = 'Estadio Rodrigo Paz Delgado',
+        ciudad          = 'Quito',
+        capacidad       = 41575,
+        tieneLuminarias = true;
 
-  Equipo.produccion({required this.nombre, required this.ciudad})
-      : capacidadEstadio  = 443,
-        esProfesional  = true;
+  Estadio.alterno({required this.nombre, required this.ciudad})
+      : capacidad       = 15000,
+        tieneLuminarias = false;
 
-  factory Equipo.desdeUrl(String url) {
-    final uri = Uri.parse(url);
-    return Equipo(
-      nombre: uri.host,
-      ciudad:       uri.host,
-      capacidadEstadio:   uri.port != 0 ? uri.port : (uri.scheme == 'https' ? 443 : 80),
-      esProfesional:   uri.scheme == 'https',
+  // Constructor factory — lógica de creación más compleja
+  factory Estadio.desdeTextoPlano(String datos) {
+    // Analiza una línea de texto separada por comas y extrae sus partes
+    final partes = datos.split(',');
+    final nombreEstadio = partes[0].trim();
+    final ciudadEstadio = partes[1].trim();
+    final capacidadEstadio = int.parse(partes[2].trim());
+    
+    return Estadio(
+      nombre:          nombreEstadio,
+      ciudad:          ciudadEstadio,
+      capacidad:       capacidadEstadio,
+      tieneLuminarias: capacidadEstadio > 20000, // Lógica automatizada
     );
   }
 
   @override
   String toString() =>
-      '${esProfesional ? "PRO" : "AMATEUR"}://$nombre:$capacidadEstadio';
+      '$nombre ($ciudad) - Capacidad: $capacidad espectadores | Luces: ${tieneLuminarias ? "Sí" : "No"}';
 }
 
 void main() {
-  final e1 = Equipo(nombre: 'api.mi-app.com', ciudad: '10.0.1.5', capacidadEstadio: 3000);
-  final e2 = Equipo.local();
-  final e3 = Equipo.produccion(nombre: 'api.mi-app.com', ciudad: '10.0.1.5');
-  final e4 = Equipo.desdeUrl('https://pagos.mi-app.com:8443/v1');
+  final e1 = Estadio(nombre: 'Estadio Monumental', ciudad: 'Guayaquil', capacidad: 57000);
+  final e2 = Estadio.casaBlanca();
+  final e3 = Estadio.alterno(nombre: 'Estadio Olímpico Atahualpa', ciudad: 'Quito');
+  final e4 = Estadio.desdeTextoPlano('Estadio Alejandro Serrano Aguilar, Cuenca, 16500');
 
   print(e1);
   print(e2);

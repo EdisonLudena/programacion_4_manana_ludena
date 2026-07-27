@@ -1,29 +1,28 @@
 void main() {
-  var nombreJugador = 'Leo';
-  var edad          = 36;
-  var valorMercado  = 120.50;
-  var lesionado     = false;
+var equipo = 'Liga de Quito';
+var campeonatos = 14;
+var presupuesto = 12.5;
+var enCompeticion = true;
 
-  String posicion = 'Delantero';
-  int    goles    = 800;
-  double promedioGoles = 0.85;
-  bool   titular  = false;
+String jugador = 'Edison';
+int dorsales = 10;
+double calificacion = 8.5;
+bool titular = true;
 
-  final club = 'Barcelona';
+final estadio = 'Estadio Rodrigo Paz Delgado';
 
-  const valoracion = 9.8;
-  const ratioEfectividad = 3.14159;
+const jugadoresEnCancha = 11;
+const minutosPartido = 90;
 
-  final fechaFichaje = DateTime.now();
+final horaPitazoInicial = DateTime.now();
 
-  print('$nombreJugador en la posición de $posicion tiene $edad años en el club $club');
+print('$jugador juega en $equipo que tiene $campeonatos títulos en el $estadio');
 
-  var tarjetasAmarillas = 0;
-  tarjetasAmarillas = 1;
+var golesGrupales = 0;
+golesGrupales = 2;
 
-  final golesPorPartido = [1, 2, 3];
-  golesPorPartido.add(4);
+final alineacion = ['Arquero', 'Defensa', 'Mediocampista'];
+alineacion.add('Delantero');
 
-  const equipaciones = ['local', 'visitante'];
-
+const posicionesFutbol = ['Arquero', 'Delantero'];
 }

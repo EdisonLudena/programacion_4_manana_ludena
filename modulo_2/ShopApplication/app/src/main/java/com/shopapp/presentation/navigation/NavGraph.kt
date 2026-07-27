@@ -3,6 +3,7 @@ package com.shopapp.presentation.navigation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.remote.creation.profile.Profile
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,9 +18,12 @@ import com.shopapp.presentation.ui.admin.dashboard.DashboardScreen
 import com.shopapp.presentation.ui.admin.orders.OrderAdminDetailScreen
 import com.shopapp.presentation.ui.admin.orders.OrdersAdminScreen
 import com.shopapp.presentation.ui.admin.products.ProductsAdminScreen
+import com.shopapp.presentation.ui.admin.users.SendNotificationScreen
 import com.shopapp.presentation.ui.admin.users.UsersAdminScreen
+import com.shopapp.presentation.ui.auth.ForgotPasswordScreen
 import com.shopapp.presentation.ui.auth.LoginScreen
 import com.shopapp.presentation.ui.auth.RegisterScreen
+import com.shopapp.presentation.ui.auth.ResetPasswordConfirmScreen
 import com.shopapp.presentation.ui.client.orders.OrderDetailScreen
 import com.shopapp.presentation.ui.client.orders.OrdersScreen
 import com.shopapp.presentation.ui.client.profile.ProfileScreen
@@ -108,13 +112,14 @@ fun NavGraph(
             // ── LOGIN ───────────────────────────────
             composable(Screen.Login.route) {
                 LoginScreen(
-                    onLoginSuccess = { staff ->
+                    onLoginSuccess       = { staff ->
                         val dest = if (staff) Screen.AdminDashboard.route else Screen.Home.route
                         navController.navigate(dest) {
                             popUpTo(Screen.Login.route) { inclusive = true }
                         }
                     },
                     onNavigateToRegister = { navController.navigate(Screen.Register.route) },
+                    onForgotPassword     = { navController.navigate(Screen.ForgotPassword.route) },  // ← nuevo
                     viewModel            = authViewModel,
                 )
             }
@@ -130,6 +135,27 @@ fun NavGraph(
                     },
                     onNavigateToLogin = { navController.popBackStack() },
                     viewModel         = authViewModel,
+                )
+            }
+
+
+            // ── Recuperación de contraseña ───────────────────────────────────────────────
+
+            composable(Screen.ForgotPassword.route) {
+                ForgotPasswordScreen(
+                    onBack        = { navController.popBackStack() },
+                    onGoToConfirm = { navController.navigate(Screen.ResetPasswordConfirm.route) },
+                )
+            }
+
+            composable(Screen.ResetPasswordConfirm.route) {
+                ResetPasswordConfirmScreen(
+                    onBack         = { navController.popBackStack() },
+                    onResetSuccess = {
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                    },
                 )
             }
 
@@ -189,12 +215,12 @@ fun NavGraph(
             }
 
             // ── PROFILE ────────────────────────────
+
+
             composable(Screen.Profile.route) {
                 if (!isAuthenticated) {
                     LaunchedEffect(Unit) {
-                        navController.navigate(Screen.Login.route) {
-                            popUpTo(Screen.Home.route)
-                        }
+                        navController.navigate(Screen.Login.route) { popUpTo(Screen.Home.route) }
                     }
                 } else {
                     ProfileScreen(
@@ -204,6 +230,7 @@ fun NavGraph(
                                 popUpTo(0) { inclusive = true }
                             }
                         },
+                        onSendNotification = { navController.navigate(Screen.SendNotification.route) },  // ← nuevo
                     )
                 }
             }
@@ -415,6 +442,19 @@ fun NavGraph(
                         UsersAdminScreen()
                     }
                 }
+            }
+
+            // ── Notificaciones de staff ───────────────────────────────────────────────────
+            composable(Screen.SendNotification.route) {
+                if (!isStaff) {
+                    LaunchedEffect(Unit) {
+                        navController.popBackStack()
+                    }
+                    return@composable
+                }
+                SendNotificationScreen(
+                    onBack = { navController.popBackStack() },
+                )
             }
         }
     }

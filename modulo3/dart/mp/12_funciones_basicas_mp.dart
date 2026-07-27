@@ -1,45 +1,40 @@
-int sumarGoles(int a, int b) {
-  return a + b;
+int calcularGolesGlobal(int ida, int vuelta) {
+  return ida + vuelta;
 }
 
-
-int golesBase(){
-  return 5+2;
-}
-int calcularPuntos(int victorias, int factor) => victorias * factor;
-
-void imprimirCategoria(String titulo) {
-  print('─── $titulo ───');
+int calcularGolesMinimos() {
+  return 1 + 0;
 }
 
+int calcularPuntos(int partidosGanados, int valorVictoria) => partidosGanados * valorVictoria;
 
+void imprimirSeccionPartido(String fase) {
+  print('─── $fase ───');
+}
 
-String formatearValorMercado(double valor) => '\$${valor.toStringAsFixed(2)}M';
+String formatearTiempo(double minutos) => '${minutos.toStringAsFixed(1)} min';
 
-formatearValorMercadoSinTipo(double valor) => '\$${valor.toStringAsFixed(2)}M';
+formatearTiempoSinTipo(double minutos) => '${minutos.toStringAsFixed(1)} min';
 
-
-String construirFicha(String equipo, String jugador, [int? dorsal]) {
-  if (dorsal != null) {
-    return 'club://$equipo:$dorsal/$jugador';
+String generarFichaPartido(String local, String visitante, [int? golesLocal]) {
+  if (golesLocal != null) {
+    return '$local ($golesLocal) vs $visitante';
   }
-  return 'club://$equipo/$jugador';
+  return '$local vs $visitante';
 }
 
-String construirFichaV2(String equipo, String jugador, [int dorsal = 10]) {
-  return 'club://$equipo:$dorsal/$jugador';
+String generarFichaPartidoV2(String local, String visitante, [int golesLocal = 0]) {
+  return '$local ($golesLocal) vs $visitante';
 }
-
-
 
 void main() {
-  print(golesBase());
-  print(sumarGoles(5, 3));
-  print(formatearValorMercado(1299.9));
-  print(calcularPuntos(4, 6));
-  imprimirCategoria('Inicio');
+  print(calcularGolesMinimos());
+  print(calcularGolesGlobal(2, 1));
+  print(formatearTiempo(45.5));
+  print(calcularPuntos(3, 3));
+  imprimirSeccionPartido('Final de Ida');
 
-  print(construirFicha('realmadrid.com', 'messi'));
-  print(construirFicha('realmadrid.com', 'messi', 8080));
-  print(construirFichaV2('realmadrid.com', 'cr7'));
+  print(generarFichaPartido('Liga de Quito', 'Barcelona SC'));
+  print(generarFichaPartido('Liga de Quito', 'Barcelona SC', 2));
+  print(generarFichaPartidoV2('Independiente del Valle', 'Emelec'));
 }

@@ -1,78 +1,78 @@
 void main() {
-
-  String dorsalJugador = '404';
+  String dorsalJugador = '10';
 
   switch (dorsalJugador) {
-    case '200':
-      print('Portero Histórico');
-    case '201':
-      print('Defensa Especial');
-    case '400':
-      print('Mediocampista Clásico');
-    case '401':
-      print('Extremo Veloz');
-    case '404':
-      print('Delantero Desconocido');
-    case '500':
-      print('Entrenador Suspendido');
+    case '1':
+      print('Arquero');
+    case '2':
+      print('Defensa Central');
+    case '5':
+      print('Mediocampista de marca');
+    case '8':
+      print('Volante mixto');
+    case '10':
+      print('Enganche creativo');
+    case '11':
+      print('Extremo izquierdo');
     default:
-      print('Dorsal no asignado');
+      print('Posición alternativa');
   }
-  String dorsalJugador2 = '404';
 
-  String descripcion = switch (dorsalJugador2) {
-    '200' => 'OK — jugador habilitado',
-    '201' => 'Created — ficha creada',
-    '204' => 'No Content — sin historial',
-    '400' => 'Bad Request — datos de jugador inválidos',
-    '401' => 'Unauthorized — sin transferir',
-    '403' => 'Forbidden — jugador suspendido',
-    '404' => 'Not Found — jugador no registrado',
-    '500' => 'Internal Server Error en la base de fichajes',
-    '503' => 'Servicio de transferencias no disponible',
-    _     => 'Dorsal / ID desconocido',
+  String dorsalJugador2 = '10';
+
+  String rolTactico = switch (dorsalJugador2) {
+    '1' => 'Guardameta titular',
+    '2' => 'Zaguero defensivo',
+    '4' => 'Lateral derecho',
+    '5' => 'Pivote defensivo',
+    '8' => 'Interior organizador',
+    '9' => 'Centrodelantero / Ariete',
+    '10' => 'Creador de juego',
+    '11' => 'Atacante por banda',
+    '14' => 'Relevo recurrente',
+    _ => 'Jugador polifuncional',
   };
 
-  print(descripcion);
+  print(rolTactico);
 
-  int idFichaje = 404;
+  int idPosicion = 9;
 
-  String categoriaFichaje = switch (idFichaje) {
-    200 || 201 || 204       => 'Convocado Regular (2xx)',
-    301 || 302 || 307       => 'Cedido a otro club (3xx)',
-    400 || 401 || 403 || 404 => 'Error en registro de fichaje (4xx)',
-    500 || 502 || 503       => 'Error administrativo de liga (5xx)',
-    _                       => 'Categoría desconocida',
+  String sectorCancha = switch (idPosicion) {
+    1 => 'Portería',
+    2 || 3 || 4 || 6 => 'Línea Defensiva',
+    5 || 8 || 10 => 'Zona de Volantes',
+    7 || 9 || 11 => 'Frente de Ataque',
+    _ => 'Banca de suplentes',
   };
 
-  print(categoriaFichaje);
+  print(sectorCancha);
 
-  double fatigaJugador = 39.2;
+  double calificacionRendimiento = 8.7;
 
-  String alertaFisica = switch (fatigaJugador) {
-    double t when t >= 40.0 => '🚨 CRÍTICO — Lesión severa detectada',
-    double t when t >= 38.5 => '🔴 FATIGA ALTA — Requiere cambio',
-    double t when t >= 37.5 => '🟡 FATIGA LEVE — Monitorear condición',
-    double t when t >= 36.0 => '🟢 CONDICIÓN EXCELENTE',
-    _                       => '🔵 BAJO RENDIMIENTO — Calentando',
+  String evaluacionDTSwitch = switch (calificacionRendimiento) {
+    double c when c >= 9.5 => 'Figura indiscutible — Nivel internacional',
+    double c when c >= 8.5 => 'Partido destacado — Rendimiento alto',
+    double c when c >= 7.0 => 'Cumplió en la cancha — Regular',
+    double c when c >= 6.0 => 'Bajo rendimiento — Ajustar marca',
+    _ => 'Revisión técnica — Posible suplencia',
   };
 
-  print(alertaFisica);
+  print(evaluacionDTSwitch);
 
-  Object infoJugador = {'id': 1, 'nombre': 'Teclado', 'precio': 89.99};
+  Object datosPartido = {'id': 9, 'apellido': 'Arce', 'goles': 2};
 
-  String resultado = switch (infoJugador) {
-    Map<String, dynamic> m when m.containsKey('error') =>
-        'Error de fichaje: ${m['error']}',
+  String resultadoAnalisis = switch (datosPartido) {
+    Map<String, dynamic> m when m.containsKey('tarjeta_roja') =>
+        'Expulsado: ${m['tarjeta_roja']}',
     Map<String, dynamic> m =>
-        'Jugador: ${m['nombre']} — \$${m['precio']}M',
+        'Jugador: ${m['apellido']} — Goles anotados: ${m['goles']}',
     List<dynamic> lista =>
-        '${lista.length} jugadores en la plantilla',
+        '${lista.length} sustituciones realizadas',
     String texto =>
-        'Nombre del club recibido: $texto',
+        'Reporte médico: $texto',
     _ =>
-        'Datos del equipo desconocidos',
+        'Registro no especificado',
   };
 
-  print(resultado);
+  print(resultadoAnalisis);
 }

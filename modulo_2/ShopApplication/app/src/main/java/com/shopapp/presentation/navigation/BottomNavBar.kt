@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.shopapp.theme.*
 
+
 data class BottomNavItem(
     val screen:      Screen,
     val label:       String,

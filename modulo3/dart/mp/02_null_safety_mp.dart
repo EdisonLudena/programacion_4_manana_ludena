@@ -1,23 +1,23 @@
 void main() {
-  String nombreEquipo = 'Real Madrid';
+  String posicion = 'Delantero';
 
-  String? patrocinador = null;
-  patrocinador = 'Adidas';
+  String? directorTecnico = null;
+  directorTecnico = 'Zubeldía';
 
-  String? estadio;
+  String? proximoRival;
 
-  print(estadio?.length);
+  print(proximoRival?.length);
 
-  String nombreEstadio = estadio ?? 'Sin estadio';
-  print(nombreEstadio);
+  String partidoEnFirme = proximoRival ?? 'Por definir';
+  print(partidoEnFirme);
 
-  String estadioSeguro = estadio!;
+  String rivalConfirmado = proximoRival!;
 
-  if (patrocinador != null) {
-    print(patrocinador.length);
+  if (directorTecnico != null) {
+    print(directorTecnico.length);
   }
 
-  late String codigoEntrenador;
-  codigoEntrenador = 'abc123';
-  print(codigoEntrenador);
+  late String tokenArbitral;
+  tokenArbitral = 'FIFA-9876';
+  print(tokenArbitral);
 }

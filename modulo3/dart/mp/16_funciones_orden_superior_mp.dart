@@ -1,10 +1,12 @@
 void main() {
-  final valoresMercado = [29.99, 49.50, 15.00, 99.99];
+  final recaudacionesTaquilla = [29.99, 49.50, 15.00, 99.99];
 
-  final valoresConImpuestos = valoresMercado.map((p) => p * 1.15);
-  print(valoresConImpuestos.toList());
+  // map devuelve un Iterable con cada elemento transformado
+  final recaudacionConImpuesto = recaudacionesTaquilla.map((r) => r * 1.15);
+  print(recaudacionConImpuesto.toList());
 
-  final rutasFichas = ['/messi', '/ronaldo', '/neymar'];
-  final urls = rutasFichas.map((e) => 'https://clubfutbol.com$e');
-  print(urls.toList());
+  // map sobre Strings
+  final pathsEstrategia = ['/alineacion', '/estadisticas', '/suplentes'];
+  final urlsAnalisis = pathsEstrategia.map((p) => 'https://api.clubfutbol$p');
+  print(urlsAnalisis.toList());
 }

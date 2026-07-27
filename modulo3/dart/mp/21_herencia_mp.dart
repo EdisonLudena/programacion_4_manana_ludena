@@ -1,41 +1,41 @@
-class MiembroEquipo {
+class PersonaClub {
   final String nombre;
-  final int    edadAnios;
+  final int edadAnios;
 
-  MiembroEquipo(this.nombre, this.edadAnios);
+  PersonaClub(this.nombre, this.edadAnios);
 
-  String obtenerRol() => '...';
+  String cumplirRol() => '...';
 
   void presentarse() {
-    print('Soy $nombre, tengo $edadAnios años y mi rol es: ${obtenerRol()}');
+    print('Soy $nombre, tengo $edadAnios años y mi rol es: ${cumplirRol()}');
   }
 }
 
-class Jugador extends MiembroEquipo {
+class Jugador extends PersonaClub {
   Jugador(super.nombre, super.edadAnios);
 
   @override
-  String obtenerRol() => 'Futbolista';
+  String cumplirRol() => 'Jugar en la cancha y anotar goles';
 
-  void chutar() => print('$nombre entrena con el balón ⚽');
+  void entrenar() => print('$nombre está entrenando en el gimnasio');
 }
 
-class Entrenador extends MiembroEquipo {
-  Entrenador(super.nombre, super.edadAnios);
+class DirectorTecnico extends PersonaClub {
+  DirectorTecnico(super.nombre, super.edadAnios);
 
   @override
-  String obtenerRol() => 'Director Técnico';
+  String cumplirRol() => 'Dirigir los partidos y armar la estrategia';
 
-  void dirigir() => print('$nombre planifica la táctica en la pizarra 📋');
+  void darInstrucciones() => print('$nombre está dando indicaciones en la pizarra');
 }
 
 void main() {
-  final jugador = Jugador('Messi', 36);
-  final entrenador  = Entrenador('Pep', 53);
+  final jugador = Jugador('Arce', 28);
+  final dt = DirectorTecnico('Vitamina', 54);
 
   jugador.presentarse();
-  entrenador.presentarse();
+  dt.presentarse();
 
-  jugador.chutar();
-  entrenador.dirigir();
+  jugador.entrenar();
+  dt.darInstrucciones();
 }
